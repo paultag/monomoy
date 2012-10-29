@@ -1,0 +1,14 @@
+#!/bin/sh
+
+MONOMOY_LIB=/usr/lib/monomoy
+SCRIPT=$1
+
+if [ "x${SCRIPT}" = "x" ]; then
+    SCRIPT='help'
+fi
+
+if [ ! -e ${MONOMOY_LIB}/${SCRIPT} ]; then
+    SCRIPT='help'
+fi
+
+${MONOMOY_LIB}/${SCRIPT} $@
