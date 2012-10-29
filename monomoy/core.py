@@ -21,6 +21,7 @@
 import os
 from pymongo import Connection
 
+
 _db_name = os.environ.get('MONOMOY_DB', 'monomoy')
 
 connection = Connection('localhost', 27017)
