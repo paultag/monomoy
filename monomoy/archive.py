@@ -18,6 +18,8 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+from monomoy.core import db
+
 
 class MonomoyArchive(object):
     """
@@ -41,7 +43,8 @@ class MonomoyArchive(object):
     def get_packages(self):
         """
         """
-        pass
+        pkgs = db.packages.find()
+        return pkgs
 
     def accept_package(self, changes_path):
         """

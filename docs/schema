@@ -1,0 +1,57 @@
+
+
+  packages
+
+    - name: 'fluxbox'
+    - changes: ObjectId
+    - control: ObjectId
+    - dsc: ObjectId
+    - build_entry: ObjectId
+    - upload_date: DateTime
+    - owner: user_string
+
+  changes
+    - parsed changes file
+
+  dsc
+    - parsed dsc file
+
+  control
+    - parsed control file
+
+  build_entry
+    - builds: {
+        "lint": {
+            builder: node1,
+            time: DateTime,
+            finished: true,
+            results: [objid]
+        }
+    }
+
+  results
+    - package: ObjectId
+    - results: {
+        'errors': [],
+        'warnings': [
+            {
+                'file': './debian/control',
+                'tag': 'stupid-maintainer',
+                'text': "This maintainer's a dick."
+            },
+            {
+                'package': 'fluxbox',
+                'tag': 'stupid-maintainer',
+                'text': "This maintainer's a dick."
+            }
+        ],
+        'passed': true
+    }
+
+  users
+    - first_name: 'Paul',
+    - last_name: 'Tagliamonte',
+    - middle_name: 'Richards',
+    - email: 'paultag@debian.org',
+    - gpg_key: 'foofoofoo'
+    - irc: 'paultag'
