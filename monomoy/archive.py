@@ -20,17 +20,30 @@
 
 
 class MonomoyArchive(object):
+    """
+    """
+
     def __init__(self, root):
+        """
+        """
         pass
 
     def remove_package(self, package_id):
+        """
+        """
         pass
 
     def get_package(self, package_id):
+        """
+        """
         pass
 
     def get_packages(self):
+        """
+        """
         pass
 
     def accept_package(self, changes_path):
+        """
+        """
         pass
