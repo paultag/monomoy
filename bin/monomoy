@@ -4,10 +4,12 @@ MONOMOY_LIB=/usr/lib/monomoy
 SCRIPT=$1
 
 if [ "x${SCRIPT}" = "x" ]; then
+    echo "Error in usage."
     SCRIPT='help'
 fi
 
 if [ ! -e ${MONOMOY_LIB}/${SCRIPT} ]; then
+    echo "No such script: ${SCRIPT}"
     SCRIPT='help'
 fi
 

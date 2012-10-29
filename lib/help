@@ -1,6 +1,5 @@
 #!/bin/sh
 
-echo "Error in usage."
 echo ""
 echo "monomoy command [args]"
 echo ""
