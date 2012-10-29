@@ -15,7 +15,7 @@ setup(
     author_email="paultag@debian.org",
     long_description=long_description,
     description='does some stuff with things & stuff',
-    license="GPL-2+",
+    license="Expat",
     url="",
     platforms=['any']
 )
