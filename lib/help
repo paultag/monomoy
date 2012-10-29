@@ -4,6 +4,7 @@ echo ""
 echo "monomoy command [args]"
 echo ""
 echo "Commands:"
+echo ""
 for x in `ls ${MONOMOY_LIB}`; do
     echo " - ${x}"
 done
