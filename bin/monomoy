@@ -2,6 +2,7 @@
 
 MONOMOY_LIB=/usr/lib/monomoy
 SCRIPT=$1
+DB='monomoy'
 
 if [ "x${SCRIPT}" = "x" ]; then
     echo "Error in usage."
@@ -14,7 +15,9 @@ if [ ! -e ${MONOMOY_LIB}/${SCRIPT} ]; then
 fi
 
 MONOMOY_SCRIPT=${SCRIPT}
+MONOMOY_DB=${DB}
 
+export MONOMOY_DB
 export MONOMOY_LIB
 export MONOMOY_SCRIPT
 
