@@ -18,3 +18,10 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+import os
+from pymongo import Connection
+
+_db_name = os.environ.get('MONOMOY_DB', 'monomoy')
+
+connection = Connection('localhost', 27017)
+db = getattr(connection, _db_name)
