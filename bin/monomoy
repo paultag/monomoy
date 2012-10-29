@@ -4,6 +4,10 @@ MONOMOY_LIB=/usr/lib/monomoy
 SCRIPT=$1
 DB='monomoy'
 
+if [ "x${MONOMOY_DB}" = "x" ]; then
+    SCRIPT=${MONOMOY_DB}
+fi
+
 if [ "x${SCRIPT}" = "x" ]; then
     echo "Error in usage."
     SCRIPT='help'

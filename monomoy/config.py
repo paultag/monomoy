@@ -18,6 +18,13 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+import os
+import json
 
-def load_from_cwd():
-    pass
+DEFAULT_PREFIX = 'config/%s'
+
+
+def load(name):
+    path = DEFAULT_PREFIX % (name)
+    if os.path.exists(path):
+        return json.load(open(path, 'r'))
