@@ -11,4 +11,9 @@ if [ ! -e ${MONOMOY_LIB}/${SCRIPT} ]; then
     SCRIPT='help'
 fi
 
+MONOMOY_SCRIPT=${SCRIPT}
+
+export MONOMOY_LIB
+export MONOMOY_SCRIPT
+
 ${MONOMOY_LIB}/${SCRIPT} $@
