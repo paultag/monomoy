@@ -47,7 +47,7 @@ class MonomoyArchive(Hook):
         self._root = root
         self.fire('monomoy-init', {'root': root})
 
-    def accept_package(self, changes):
+    def process_incoming_package(self, changes):
         """
         """
-        pass
+        print changes

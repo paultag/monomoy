@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
+from monomoy.changes import Changes
 from monomoy.archive import MonomoyArchive
 from monomoy.utils import iter_dir_xtn
 
 
 archive = MonomoyArchive(".")
 for package in iter_dir_xtn('incoming', '.changes'):
-    print package
+    changes = Changes(filename=package)
+    archive.process_incoming_package(changes)

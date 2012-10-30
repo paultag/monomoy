@@ -30,11 +30,6 @@
 #   WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #   OTHER DEALINGS IN THE SOFTWARE.
-"""
-This code deals with the reading and processing of Debian .changes files. This
-code is copyright (c) Jonny Lamb, and is used by dput, rather then created as
-a result of it. Thank you Jonny.
-"""
 
 __author__ = 'Jonny Lamb'
 __copyright__ = 'Copyright © 2008 Jonny Lamb, Copyright © 2010 Jan Dittberner'
@@ -44,9 +39,12 @@ import os.path
 import hashlib
 from debian import deb822
 
-from dput.core import logger
-from dput.util import run_command
-from dput.exceptions import ChangesFileException
+from monomoy.utils import run_command
+from monomoy.errors import MonomoyError
+
+
+class ChangesFileException(MonomoyError):
+    pass
 
 
 class Changes(object):
