@@ -22,6 +22,8 @@ import os
 
 from monomoy.core import db
 from monomoy.errors import MonomoyError
+from monomoy.changes import ChangesFileException
+
 from fishhook import Hook
 
 
@@ -47,7 +49,36 @@ class MonomoyArchive(Hook):
         self._root = root
         self.fire('monomoy-init', {'root': root})
 
+    def _reject_package(self, changes, reason):
+        self.fire('monomoy-reject', {
+            'srcpkg': changes.get_package_name(),
+            'reason': reason
+        })
+
+    def _accept_package(self, changes):
+        self.fire('monomoy-accept', {
+            'changes': changes
+        })
+
     def process_incoming_package(self, changes):
         """
         """
-        print changes
+        # firstly, let's check the upload was intact.
+        try:
+            changes.validate_checksums(check_hash='sha1')
+        except ChangesFileException:
+            self._reject_package(
+                changes,
+                "Checksums are invalid."
+            )
+            return
+
+        try:
+            key_id = changes.validate_signature()
+        except ChangesFileException:
+            self._reject_package(
+                changes,
+                "Signature is invalid."
+            )
+            return
+        # look up key_id, ensure user is rockn'.

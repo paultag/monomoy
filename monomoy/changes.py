@@ -219,8 +219,6 @@ class Changes(object):
         self.validate_checksums(check_hash)
         if check_signature:
             self.validate_signature(check_signature)
-        else:
-            logger.info("Not checking signature")
 
     def validate_signature(self, check_signature=True):
         """
@@ -241,7 +239,7 @@ class Changes(object):
                 "Unknown problem while verifying signature")
 
         # contains verbose human readable GPG information
-        print(gpg_output_stderr)  # XXX: Don't depend on stdout
+        # print(gpg_output_stderr)  # XXX: Don't depend on stdout
 
         if gpg_output.count('[GNUPG:] GOODSIG'):
             pass
@@ -274,7 +272,6 @@ class Changes(object):
             * md5
             * md5sum
         """
-        logger.info("Validate %s checksums" % (check_hash))
 
         for filename in self.get_files():
             if check_hash == "sha1":
@@ -312,10 +309,6 @@ class Changes(object):
                         hash_type.hexdigest(),
                         changed_files[field_name]
                     ))
-            else:
-                logger.trace("%s Checksum for file %s matches" % (
-                    field_name, filename
-                ))
 
 
 def parse_changes_file(filename, directory=None):
