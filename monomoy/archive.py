@@ -18,35 +18,36 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+import os
+
 from monomoy.core import db
+from monomoy.errors import MonomoyError
+from fishhook import Hook
 
 
-class MonomoyArchive(object):
+class MonomoyArchiveErrror(MonomoyError):
+    pass
+
+
+class MonomoyArchive(Hook):
     """
+    Internal archive implementation. This helps to abstract away some of
+    the pain in dealing with the archive.
+
+    This isn't an apt repo.
     """
 
     def __init__(self, root):
         """
+        Initalize the repo & all that. May raise a MonomoyArchiveErrror
+        if the ``root`` does not exist.
         """
-        pass
+        if not os.path.exists(root):
+            raise MonomoyArchiveErrror("No such folder %s" % (root))
+        self._root = root
+        self.fire('monomoy-init', {'root': root})
 
-    def remove_package(self, package_id):
-        """
-        """
-        pass
-
-    def get_package(self, package_id):
-        """
-        """
-        pass
-
-    def get_packages(self):
-        """
-        """
-        pkgs = db.packages.find()
-        return pkgs
-
-    def accept_package(self, changes_path):
+    def accept_package(self, changes):
         """
         """
         pass
