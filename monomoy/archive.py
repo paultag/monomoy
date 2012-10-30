@@ -21,6 +21,7 @@
 import os
 
 from monomoy.core import db
+from monomoy.users import find_user
 from monomoy.errors import MonomoyError
 from monomoy.changes import ChangesFileException
 
@@ -81,4 +82,15 @@ class MonomoyArchive(Hook):
                 "Signature is invalid."
             )
             return
-        # look up key_id, ensure user is rockn'.
+
+        user = find_user({
+            "gpg": key_id
+        })
+        if user is None:
+            self._reject_package(
+                changes,
+                "No such user."
+            )
+            return
+
+        print user.display_name()

@@ -4,7 +4,7 @@ MONOMOY_LIB=/usr/lib/monomoy
 SCRIPT=$1
 DB='monomoy'
 
-if [ "x${MONOMOY_DB}" = "x" ]; then
+if [ "x${MONOMOY_DB}" != "x" ]; then
     DB=${MONOMOY_DB}
 fi
 
