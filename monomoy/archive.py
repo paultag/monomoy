@@ -66,6 +66,7 @@ class MonomoyArchive(Hook):
     def _reject_package(self, changes, reason):
         self.fire('monomoy-package-rejected', {
             'srcpkg': changes.get_package_name(),
+            'changes': changes,
             'reason': reason
         })
         for fd in changes.get_files():
