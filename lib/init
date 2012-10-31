@@ -1,0 +1,17 @@
+#!/bin/bash
+
+folder=$2
+
+if [ "x$folder" = "x" ]; then
+    echo "Need a third argument - a folder to init"
+    exit 2
+fi
+
+if [ -d $folder ]; then
+    echo "Folder exists. Please remove it."
+    exit 1
+fi
+
+mkdir $folder
+cd $folder
+mkdir {archive,config,incoming,tacklebox}
