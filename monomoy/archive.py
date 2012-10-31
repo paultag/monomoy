@@ -68,6 +68,9 @@ class MonomoyArchive(Hook):
             'srcpkg': changes.get_package_name(),
             'reason': reason
         })
+        for fd in changes.get_files():
+            os.unlink(fd)
+        os.unlink(changes.get_changes_file())
 
     def _accept_package(self, changes, user):
         processed_changes = changes._get_changes_obj()
