@@ -1,0 +1,8 @@
+{
+    "archive_name": "My Package Store™",
+    "administrator": {
+        "email": "email@example.tld",
+        "name": "Paul R. Tagliamonte"
+    },
+    "mongo_db": "monomoy"
+}

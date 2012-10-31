@@ -19,10 +19,22 @@
 # DEALINGS IN THE SOFTWARE.
 
 import os
+import sys
+import json
 from pymongo import Connection
 
 
 _db_default = "monomoy"
+
+
+CONFIG = {}
+
+cfil = 'config/monomoy.json'
+if os.path.exists(cfil):
+    CONFIG = json.load(open(cfil, 'r'))
+
+if 'mongo_db' in CONFIG:
+    _db_default = CONFIG['mongo_db']
 
 _db_name = os.environ.get('MONOMOY_DB', _db_default)
 if _db_name.strip() == "":
@@ -30,3 +42,12 @@ if _db_name.strip() == "":
 
 connection = Connection('localhost', 27017)
 db = getattr(connection, _db_name)
+
+
+def mangle_sys():
+    pth = "./scripts"
+    pth = os.path.abspath(pth)
+    if pth not in sys.path:
+        sys.path.insert(0, pth)
+
+mangle_sys()

@@ -61,7 +61,7 @@ class MonomoyArchive(Hook):
         if not os.path.exists(root):
             raise MonomoyArchiveErrror("No such folder %s" % (root))
         self._root = root
-        self.fire('monomoy-init', {'root': root})
+        self.fire('monomoy-archive-init', {'root': root})
 
     def _reject_package(self, changes, reason):
         self.fire('monomoy-package-rejected', {

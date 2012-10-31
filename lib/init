@@ -14,4 +14,19 @@ fi
 
 mkdir $folder
 cd $folder
-mkdir {archive,config,incoming,tacklebox}
+mkdir {archive,config,incoming,tacklebox,scripts}
+
+echo "Skel created."
+
+POPDIR=`pwd`
+
+S_ROOT=/usr/share/monomoy/skel
+cd $S_ROOT
+files=$(find . -type f)
+cd $POPDIR
+
+echo "Copying in skel files."
+
+for file in $files; do
+    cp $S_ROOT/$file $file -v
+done
