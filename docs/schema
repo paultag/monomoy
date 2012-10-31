@@ -16,9 +16,6 @@
   dsc
     - parsed dsc file
 
-  control
-    - parsed control file
-
   build_entry
     - builds: {
         "lint": {

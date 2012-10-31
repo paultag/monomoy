@@ -5,7 +5,7 @@ from monomoy.archive import MonomoyArchive
 from monomoy.utils import iter_dir_xtn
 
 
-archive = MonomoyArchive(".")
+archive = MonomoyArchive("./archive")
 for package in iter_dir_xtn('incoming', '.changes'):
     changes = parse_changes_file(package, directory='incoming')
     archive.process_incoming_package(changes)

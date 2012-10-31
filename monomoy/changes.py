@@ -144,6 +144,21 @@ class Changes(object):
         """
         return self._data.get(key, default)
 
+    def _get_changes_obj(self):
+        val = dict(deb822.Changes(open(self.get_changes_file(), 'r')))
+        val = self._obj_strip(val)
+        return val
+
+    def _get_dsc_obj(self):
+        val = dict(deb822.Dsc(open(self.get_dsc(), 'r')))
+        val = self._obj_strip(val)
+        return val
+
+    def _obj_strip(self, val):
+        for key in ['Files', 'Checksums-Sha1', 'Checksums-Sha256']:
+            val[key] = [dict(x) for x in val[key]]
+        return val
+
     def get_component(self):
         """
         Returns the component of the package.

@@ -19,8 +19,11 @@
 # DEALINGS IN THE SOFTWARE.
 
 import os
+import json
+import shutil
 
 from monomoy.core import db
+from monomoy.utils import JSONEncoder
 from monomoy.users import find_user
 from monomoy.errors import MonomoyError
 from monomoy.changes import ChangesFileException
@@ -30,6 +33,15 @@ from fishhook import Hook
 
 class MonomoyArchiveErrror(MonomoyError):
     pass
+
+
+def _get_archive_path(objid):
+    path = ""
+    nests = 4
+    for n in range(0, nests):
+        path += objid[n] + "/"
+    path += objid
+    return path
 
 
 class MonomoyArchive(Hook):
@@ -45,21 +57,44 @@ class MonomoyArchive(Hook):
         Initalize the repo & all that. May raise a MonomoyArchiveErrror
         if the ``root`` does not exist.
         """
+        root = os.path.abspath(root)
         if not os.path.exists(root):
             raise MonomoyArchiveErrror("No such folder %s" % (root))
         self._root = root
         self.fire('monomoy-init', {'root': root})
 
     def _reject_package(self, changes, reason):
-        self.fire('monomoy-reject', {
+        self.fire('monomoy-package-rejected', {
             'srcpkg': changes.get_package_name(),
             'reason': reason
         })
 
-    def _accept_package(self, changes):
-        self.fire('monomoy-accept', {
-            'changes': changes
+    def _accept_package(self, changes, user):
+        processed_changes = changes._get_changes_obj()
+        processed_dsc = changes._get_dsc_obj()
+
+        db_changes = db.changes.insert(processed_changes, safe=True)
+        db_dsc = db.dsc.insert(processed_dsc, safe=True)
+
+        package_id = db.packages.insert({
+            "name": changes.get_package_name(),
+            "changes": db_changes,
+            "dsc": db_dsc,
+            "user": user['_id']
         })
+
+        self.fire('monomoy-package-accepted', {
+            'package': package_id,
+            'changes': changes,
+            'user': user
+        })
+
+        folder = "%s/%s" % (self._root, _get_archive_path(str(package_id)))
+        os.makedirs(folder)
+        for fd in changes.get_files():
+            shutil.move(fd, folder)
+        os.unlink(changes.get_changes_file())
+
 
     def process_incoming_package(self, changes):
         """
@@ -67,6 +102,12 @@ class MonomoyArchive(Hook):
         # firstly, let's check the upload was intact.
         try:
             changes.validate_checksums(check_hash='sha1')
+        except IOError:
+            # Partial uploads should push .changes last.
+            self.fire('monomoy-package-incomplete', {
+                'changes': changes
+            })
+            os.unlink(changes.get_changes_file())
         except ChangesFileException:
             self._reject_package(
                 changes,
@@ -93,4 +134,4 @@ class MonomoyArchive(Hook):
             )
             return
 
-        print user.display_name()
+        self._accept_package(changes, user)

@@ -5,11 +5,19 @@ from monomoy.core import db
 
 
 class User(Hook):
+    _obj = {}
+
     def __init__(self, obj):
         self._obj = obj
 
     def display_name(self):
-        return "%s %s" % (self._obj['first_name'], self._obj['last_name'])
+        return "%s %s" % (self['first_name'], self['last_name'])
+
+    def __getitem__(self, name):
+        if name not in self._obj:
+            raise KeyError(name)
+
+        return self._obj[name]
 
 
 def find_user(spec):
