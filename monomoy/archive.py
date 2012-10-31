@@ -78,6 +78,7 @@ class MonomoyArchive(Hook):
 
         package_id = db.packages.insert({
             "name": changes.get_package_name(),
+            "version": changes.get("Version"),
             "changes": db_changes,
             "dsc": db_dsc,
             "user": user['_id']
