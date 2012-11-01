@@ -2,3 +2,4 @@ pymongo
 flake8
 # python-debian
 chardet
+flake8
