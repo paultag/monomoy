@@ -29,6 +29,7 @@ from monomoy.errors import MonomoyError
 from monomoy.changes import ChangesFileException
 
 from fishhook import Hook
+from bson.objectid import ObjectId
 
 
 class MonomoyArchiveErrror(MonomoyError):
@@ -140,3 +141,8 @@ class MonomoyArchive(Hook):
             return
 
         self._accept_package(changes, user)
+
+    def get_package(self, objid):
+        obj = ObjectId(objid)
+        results = db.packages.find_one({"_id": obj})
+        return results
