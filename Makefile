@@ -4,18 +4,18 @@
 all: build
 
 lint: clean
-	flake8 . -r
+	@flake8 . -r
 
 develop: build
-	python setup.py develop
+	@python setup.py develop
 
 install: build
-	python setup.py install
+	@python setup.py install
 
 build:
-	python setup.py build
+	@python setup.py build
 
 clean:
-	python setup.py clean
-	rm -rf monomoy.egg-info
-	rm -rf build
+	@python setup.py clean
+	@rm -rvf monomoy.egg-info
+	@rm -rvf build
