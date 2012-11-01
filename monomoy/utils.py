@@ -1,12 +1,10 @@
 import os
 import time
 import json
+import shlex
 import datetime
-import importlib
 import subprocess
 from bson.objectid import ObjectId
-
-from monomoy.core import mangle_sys
 
 
 def iter_dir(path):
@@ -35,8 +33,7 @@ def run_command(command):
                                 shell=False,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
-    except OSError as e:
-        logger.error("Could not execute %s: %s" % (" ".join(command), e))
+    except OSError:
         return (None, None, -1)
     (output, stderr) = pipe.communicate()
     #if pipe.returncode != 0:

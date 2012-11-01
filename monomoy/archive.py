@@ -19,11 +19,9 @@
 # DEALINGS IN THE SOFTWARE.
 
 import os
-import json
 import shutil
 
 from monomoy.core import db
-from monomoy.utils import JSONEncoder
 from monomoy.errors import MonomoyError
 from monomoy.changes import ChangesFileException
 
@@ -99,7 +97,6 @@ class MonomoyArchive(Hook):
         for fd in changes.get_files():
             shutil.move(fd, folder)
         os.unlink(changes.get_changes_file())
-
 
     def process_incoming_package(self, changes):
         """

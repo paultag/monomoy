@@ -1,5 +1,4 @@
 
 
-
 class MonomoyError(Exception):
     pass
