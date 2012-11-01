@@ -24,7 +24,6 @@ import shutil
 
 from monomoy.core import db
 from monomoy.utils import JSONEncoder
-from monomoy.users import find_user
 from monomoy.errors import MonomoyError
 from monomoy.changes import ChangesFileException
 
@@ -130,7 +129,7 @@ class MonomoyArchive(Hook):
             )
             return
 
-        user = find_user({
+        user = db.users.find({
             "gpg": key_id
         })
         if user is None:
