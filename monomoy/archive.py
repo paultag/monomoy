@@ -126,7 +126,7 @@ class MonomoyArchive(Hook):
             )
             return
 
-        user = db.users.find({
+        user = db.users.find_one({
             "gpg": key_id
         })
         if user is None:
