@@ -75,14 +75,11 @@ class MonomoyArchive(Hook):
         processed_changes = changes._get_changes_obj()
         processed_dsc = changes._get_dsc_obj()
 
-        db_changes = db.changes.insert(processed_changes, safe=True)
-        db_dsc = db.dsc.insert(processed_dsc, safe=True)
-
         package_id = db.packages.insert({
             "name": changes.get_package_name(),
             "version": changes.get("Version"),
-            "changes": db_changes,
-            "dsc": db_dsc,
+            "changes": processed_changes,
+            "dsc": processed_dsc,
             "user": user['_id']
         })
 
@@ -139,6 +136,14 @@ class MonomoyArchive(Hook):
         self._accept_package(changes, user)
 
     def get_package(self, objid):
+        """
+        """
         obj = ObjectId(objid)
         results = db.packages.find_one({"_id": obj})
         return results
+
+    def get_packages(self):
+        """
+        """
+        spec = {}  # dynamic searching?
+        return db.packages.find(spec)
