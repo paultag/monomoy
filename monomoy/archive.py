@@ -20,13 +20,14 @@
 
 import os
 import shutil
+import datetime as dt
+from bson.objectid import ObjectId
 
 from monomoy.core import db
 from monomoy.errors import MonomoyError
 from monomoy.changes import ChangesFileException
 
 from fishhook import Hook
-from bson.objectid import ObjectId
 
 
 class MonomoyArchiveErrror(MonomoyError):
@@ -80,7 +81,8 @@ class MonomoyArchive(Hook):
             "version": changes.get("Version"),
             "changes": processed_changes,
             "dsc": processed_dsc,
-            "user": user['_id']
+            "user": user['_id'],
+            "accepted_at": dt.datetime.now()
         })
 
         self.fire('monomoy-package-accepted', {
