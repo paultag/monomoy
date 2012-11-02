@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 
-from monomoy.core import db
+from monomoy.archive import MonomoyArchive
 
-print "Dropping all package stuff."
 
-db.changes.drop()
-db.dsc.drop()
-db.packages.drop()
-
-print "Package stuff dropped."
+archive = MonomoyArchive("./archive")
+for package in archive.get_packages():
+    archive.remove_package(package['_id'])

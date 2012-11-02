@@ -138,7 +138,9 @@ class MonomoyArchive(Hook):
     def get_package(self, objid):
         """
         """
-        obj = ObjectId(objid)
+        obj = objid
+        if isinstance(objid, str):
+            obj = ObjectId(objid)
         results = db.packages.find_one({"_id": obj})
         return results
 
@@ -147,3 +149,17 @@ class MonomoyArchive(Hook):
         """
         spec = {}  # dynamic searching?
         return db.packages.find(spec)
+
+    def remove_package(self, objid):
+        pkg = self.get_package(objid)
+        if pkg is None:
+            return
+        path = "%s/%s" % (self._root, _get_archive_path(str(pkg['_id'])))
+        shutil.rmtree(path)
+        db.packages.remove({
+            "_id": pkg['_id']
+        }, safe=True)
+        self.fire('monomoy-package-removed', {
+            "package": pkg,
+            "path": path
+        })
