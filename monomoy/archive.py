@@ -60,9 +60,10 @@ class MonomoyArchive(Hook):
         if not os.path.exists(root):
             raise MonomoyArchiveErrror("No such folder %s" % (root))
         self._root = root
-        self.fire('monomoy-archive-init', {'root': root})
 
     def _reject_package(self, changes, reason):
+        """
+        """
         self.fire('monomoy-package-rejected', {
             'srcpkg': changes.get_package_name(),
             'changes': changes,
@@ -73,6 +74,8 @@ class MonomoyArchive(Hook):
         os.unlink(changes.get_changes_file())
 
     def _accept_package(self, changes, user):
+        """
+        """
         processed_changes = changes._get_changes_obj()
         processed_dsc = changes._get_dsc_obj()
 
@@ -152,7 +155,17 @@ class MonomoyArchive(Hook):
         spec = {}  # dynamic searching?
         return db.packages.find(spec)
 
+    def get_package_root(self, pkg_id):
+        """
+        """
+        pkg = self.get_package(pkg_id)
+        if pkg is None:
+            return  # XXX: Exception.
+        return _get_archive_path(str(pkg['_id']))
+
     def remove_package(self, objid):
+        """
+        """
         pkg = self.get_package(objid)
         if pkg is None:
             return
