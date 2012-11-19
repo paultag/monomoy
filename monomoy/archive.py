@@ -171,6 +171,10 @@ class MonomoyArchive(Hook):
             return
         path = "%s/%s" % (self._root, _get_archive_path(str(pkg['_id'])))
         shutil.rmtree(path)
+        for job in db.jobs.find({"package": pkg['_id']}):
+            db.checks.remove({"job": job['_id']}, safe=True)
+            db.jobs.remove({"_id": job['_id']}, safe=True)
+
         db.packages.remove({
             "_id": pkg['_id']
         }, safe=True)

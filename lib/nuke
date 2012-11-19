@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from monomoy.archive import MonomoyArchive
-
+from monomoy.core import db
 
 archive = MonomoyArchive("./archive")
 for package in archive.get_packages():
