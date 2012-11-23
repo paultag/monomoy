@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ROOT=$2
+
+if [ "x$ROOT" == "x" ]; then
+    echo "No root given. Can't process."
+    exit 1
+fi
+
+cd $ROOT
+
+monomoy process-incoming
