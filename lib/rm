@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+from monomoy.archive import MonomoyArchive
+from monomoy.core import db
+from bson.objectid import ObjectId
+import sys
+
+pkgid = sys.argv[2]
+
+package = db.packages.find_one({"_id": pkgid})
+if package is None:
+    package = db.packages.find_one({"_id": ObjectId(pkgid)})
+
+if package is None:
+    print "No package: %s found" % (pkgid)
+    sys.exit(1)
+
+archive = MonomoyArchive("./archive")
+archive.remove_package(package['_id'])
