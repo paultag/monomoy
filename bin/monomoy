@@ -1,6 +1,12 @@
 #!/bin/sh
 
-MONOMOY_LIB=/usr/lib/monomoy
+# Check if this is development environment
+if [ -n $MONOMOY_DEVLIB ]; then
+    MONOMOY_LIB=$MONOMOY_DEVLIB
+else
+    MONOMOY_LIB=/usr/lib/monomoy
+fi
+
 SCRIPT=$1
 DB='monomoy'
 
