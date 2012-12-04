@@ -1,0 +1,35 @@
+{
+    "build_types": [
+        {
+            "_id": "lint",
+            "active": true
+        }
+    ],
+    "builders": [
+        {
+            "_id": "whateveryouwant",
+            "abilities": [
+                "lint"
+            ],
+            "owner": "yourpetname",
+            "ping": null,
+            "secret": "verysecret",
+            "token": null
+        }
+    ],
+    "users": [
+        {
+            "_id": "username",
+            "contact": {
+                "email": "mail@example.com",
+                "irc": {
+                    "freenode": "freenodenick",
+                    "oftc": "oftcnick"
+                }
+            },
+            "first_name": "First Name",
+            "gpg": "gpgfingerprint.withoutspace",
+            "last_name": "Last Name"
+        }
+    ]
+}
