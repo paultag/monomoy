@@ -15,6 +15,7 @@ setup(
     author_email="paultag@debian.org",
     long_description=long_description,
     description='does some stuff with things & stuff',
+    setup_requires = ['setuptools-git'],
     license="Expat",
     url="",
     platforms=['any']
