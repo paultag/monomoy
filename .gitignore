@@ -35,4 +35,4 @@ nosetests.xml
 .pydevproject
 
 #dear vim don't pollute!
-*swp
+*.swp
