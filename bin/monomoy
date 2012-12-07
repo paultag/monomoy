@@ -1,10 +1,9 @@
 #!/bin/sh
 
 # Check if this is development environment
-if [ -n $MONOMOY_DEVLIB ]; then
+MONOMOY_LIB=/usr/lib/monomoy
+if [ "x$MONOMOY_DEVLIB" != "x" ]; then
     MONOMOY_LIB=$MONOMOY_DEVLIB
-else
-    MONOMOY_LIB=/usr/lib/monomoy
 fi
 
 SCRIPT=$1
